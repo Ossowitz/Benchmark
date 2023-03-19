@@ -122,33 +122,28 @@ long long glibcGeneratorByGcc(long long seed) {
     return (a * seed + c) % m;
 }
 
-void fillArray(int *arr, size_t n) {
-    long long seed = 1 << 31;
+void fillArrayAndList(int *arr, Node **node, size_t n) {
+    long long seed = 1 >> 31;
 
     for (int i = 0; i < n; i++) {
         seed = glibcGeneratorByGcc(seed);
         arr[i] = seed;
+        append(node, seed);
     }
 }
 
+void delegatingAllOperations(int n) {
+    int *array = (int *) malloc(n * sizeof(int));
+    Node* listHead = NULL;
+    fillArrayAndList(array, &listHead, n);
+}
+
 int main() {
-    int arr10[1000];
-    Node *listHead = NULL;
-
+    int arr10[10];
+    Node *listHead10 = NULL;
     size_t size = sizeof(arr10) / sizeof(int);
+    fillArrayAndList(arr10, &listHead10, size);
 
-    fillArray(arr10, size);
-
-    for (int i = 0; i < size; i++) {
-        printf("%d ", *(arr10 + i));
-    }
-
-    // Заполнение массива и списка случайными числами
-//    for (int i = 0; i < 10; i++) {
-//        int num = rand() % 100;
-//        arr10[i] = num;
-//        append(&listHead, num);
-//    }
 //
 //    // Вывод исходных данных
 //    printf("Current array: ");
@@ -158,11 +153,11 @@ int main() {
 //    printf("\n");
 //
 //    printf("Current list: ");
-//    printList(listHead);
+//    printList(listHead10);
 //
 //    // Сортировка массива и списка с использованием быстрой сортировки
 //    quickSortArray(arr10, 0, 9);
-//    quickSortList(listHead, NULL);
+//    quickSortList(listHead10, NULL);
 //
 //    // Вывод отсортированных данных
 //    printf("Sorted array: ");
@@ -172,7 +167,7 @@ int main() {
 //    printf("\n");
 //
 //    printf("Sorted list: ");
-//    printList(listHead);
+//    printList(listHead10);
 //
     return 0;
 }
