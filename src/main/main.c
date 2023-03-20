@@ -70,22 +70,29 @@ void insert(struct Node** head, int value)
     }
 }
 
-// Функция для вывода списка
-void printList(Node *head) {
-    Node *currentNode = head;
-    while (currentNode != NULL) {
-        printf("%d ", currentNode->data);
-        currentNode = currentNode->next;
+// Displaying linked list element
+void display(struct Node* head)
+{
+    if (head == NULL) {
+        printf("Empty linked list");
+        return;
     }
-    printf("\n");
+    struct Node* temp = head;
+    printf("\n Linked List :");
+    while (temp != NULL) {
+        printf("  %d", temp->data);
+        temp = temp->next;
+    }
 }
 
-// Функция для вывода массива
-void printArray(int *arr, size_t size) {
-    for (int i = 0; i < size; i++) {
-        printf("%d ", *(arr + i));
+// Finding last node of linked list
+struct Node* last_node(struct Node* head)
+{
+    struct Node* temp = head;
+    while (temp != NULL && temp->next != NULL) {
+        temp = temp->next;
     }
-    printf("\n");
+    return temp;
 }
 
 // Вспомогательная функция для разделения списка
@@ -115,6 +122,14 @@ void quickSortList(Node *head, Node *tail) {
         quickSortList(head, currentNode);
         quickSortList(currentNode->next, tail);
     }
+}
+
+// Функция для вывода массива
+void printArray(int *arr, size_t size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d ", *(arr + i));
+    }
+    printf("\n");
 }
 
 // Функция для быстрой сортировки массива
@@ -152,7 +167,7 @@ void fillArrayAndList(int *arr, Node **node, size_t n) {
     for (int i = 0; i < n; i++) {
         seed = glibcGeneratorByGcc(seed);
         arr[i] = seed;
-        append(node, seed);
+//        append(node, seed);
 //        push(node, seed);
     }
 }
@@ -164,13 +179,13 @@ void delegatingAllOperations(int n) {
     fillArrayAndList(array, &listHead, n);
 
     printArray(array, n);
-    printList(listHead);
+//    printList(listHead);
 
     quickSortArray(array, 0, n - 1);
     quickSortList(listHead, NULL);
 
     printArray(array, n);
-    printList(listHead);
+//    printList(listHead);
 
     free(array);
     free(listHead);
