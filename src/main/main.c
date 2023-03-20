@@ -95,34 +95,39 @@ struct Node* last_node(struct Node* head)
     return temp;
 }
 
-// Вспомогательная функция для разделения списка
-Node *partitionList(Node *head, Node *tail) {
-    int pivot = tail->data;
-    Node *i = head;
-    Node *j = head;
-    while (j != tail) {
-        if (j->data <= pivot) {
-            int temp = i->data;
-            i->data = j->data;
-            j->data = temp;
-            i = i->next;
+// We are Setting the given last node position to its proper
+// position
+struct Node* partition(struct Node* first, struct Node* last)
+{
+    // Get first node of given linked list
+    struct Node* pivot = first;
+    struct Node* front = first;
+    int temp = 0;
+    while (front != NULL && front != last) {
+        if (front->data < last->data) {
+            pivot = first;
+
+            // Swapping  node values
+            temp = first->data;
+            first->data = front->data;
+            front->data = temp;
+
+            // Visiting the next node
+            first = first->next;
         }
-        j = j->next;
+
+        // Visiting the next node
+        front = front->next;
     }
-    int temp = i->data;
-    i->data = tail->data;
-    tail->data = temp;
-    return i;
+
+    // Change last node value to current node
+    temp = first->data;
+    first->data = last->data;
+    last->data = temp;
+    return pivot;
 }
 
-// Функция для быстрой сортировки связного списка
-void quickSortList(Node *head, Node *tail) {
-    if (head != tail && head != NULL && tail != NULL && head != tail->next) {
-        Node *currentNode = partitionList(head, tail);
-        quickSortList(head, currentNode);
-        quickSortList(currentNode->next, tail);
-    }
-}
+
 
 // Функция для вывода массива
 void printArray(int *arr, size_t size) {
