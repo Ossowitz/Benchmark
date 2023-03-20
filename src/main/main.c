@@ -36,22 +36,38 @@ Node *createNode(int data) {
 }
 
 /**
- * @param: head - pointer, who's the first element of the list, also called the head.
- * @param: data - numeric, who's need to add in the linked list
+ * @param: head  - pointer, who's the first element of the list, also called the head.
+ * @param: value - numeric, who's need to add in the linked list
  * @note:  Function to add an element to a list
  * @see:   https://neerc.ifmo.ru/wiki/index.php?title=%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA#:~:text=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20%D0%BE%D0%B4%D0%BD%D0%BE%D1%81%D0%B2%D1%8F%D0%B7%D0%BD%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BF%D0%B8%D1%81%D0%BA%D0%B0.-,%D0%92%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0,-%D0%9E%D1%87%D0%B5%D0%B2%D0%B8%D0%B4%D0%B5%D0%BD%20%D1%81%D0%BB%D1%83%D1%87%D0%B0%D0%B9%2C%20%D0%BA%D0%BE%D0%B3%D0%B4%D0%B0
  */
-void append(Node **head, int data) {
-    Node *newNode = createNode(data);
-    if (*head == NULL) {
-        *head = newNode;
-        return;
+void insert(struct Node** head, int value)
+{
+    // Create dynamic node
+    struct Node* node
+            = (struct Node*)malloc(sizeof(struct Node));
+    if (node == NULL) {
+        // checking memory overflow
+        printf("Memory overflow\n");
     }
-    Node *lastNode = *head;
-    while (lastNode->next != NULL) {
-        lastNode = lastNode->next;
+    else {
+        node->data = value;
+        node->next = NULL;
+        if (*head == NULL) {
+            *head = node;
+        }
+        else {
+            struct Node* temp = *head;
+
+            // finding last node
+            while (temp->next != NULL) {
+                temp = temp->next;
+            }
+
+            // adding node at last position
+            temp->next = node;
+        }
     }
-    lastNode->next = newNode;
 }
 
 // Функция для вывода списка
@@ -60,6 +76,14 @@ void printList(Node *head) {
     while (currentNode != NULL) {
         printf("%d ", currentNode->data);
         currentNode = currentNode->next;
+    }
+    printf("\n");
+}
+
+// Функция для вывода массива
+void printArray(int *arr, size_t size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d ", *(arr + i));
     }
     printf("\n");
 }
@@ -129,20 +153,31 @@ void fillArrayAndList(int *arr, Node **node, size_t n) {
         seed = glibcGeneratorByGcc(seed);
         arr[i] = seed;
         append(node, seed);
+//        push(node, seed);
     }
 }
 
 void delegatingAllOperations(int n) {
     int *array = (int *) malloc(n * sizeof(int));
-    Node* listHead = NULL;
+    Node *listHead = NULL;
+
     fillArrayAndList(array, &listHead, n);
+
+    printArray(array, n);
+    printList(listHead);
+
+    quickSortArray(array, 0, n - 1);
+    quickSortList(listHead, NULL);
+
+    printArray(array, n);
+    printList(listHead);
+
+    free(array);
+    free(listHead);
 }
 
 int main() {
-    int arr10[10];
-    Node *listHead10 = NULL;
-    size_t size = sizeof(arr10) / sizeof(int);
-    fillArrayAndList(arr10, &listHead10, size);
+    delegatingAllOperations(10);
 
 //
 //    // Вывод исходных данных
