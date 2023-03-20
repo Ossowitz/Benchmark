@@ -13,27 +13,10 @@ static long long m = 1 << 31;
 static long long a = 1103515245;
 static long long c = 12345;
 
-typedef struct Node {
+struct Node {
     int data;
     struct Node *next;
-} Node;
-
-/**
- * @param:  data  - numeric, who's need to add in the linked list
- * @return: Node* - Node, which we just added
- * @note:   function to create a new list item
- * @see:    https://neerc.ifmo.ru/wiki/index.php?title=%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA#:~:text=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20%D0%BE%D0%B4%D0%BD%D0%BE%D1%81%D0%B2%D1%8F%D0%B7%D0%BD%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BF%D0%B8%D1%81%D0%BA%D0%B0.-,%D0%92%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0,-%D0%9E%D1%87%D0%B5%D0%B2%D0%B8%D0%B4%D0%B5%D0%BD%20%D1%81%D0%BB%D1%83%D1%87%D0%B0%D0%B9%2C%20%D0%BA%D0%BE%D0%B3%D0%B4%D0%B0
- */
-Node *createNode(int data) {
-    Node *newNode = (Node *) malloc(sizeof(Node));
-    if (newNode == NULL) {
-        printf("Exception:\n");
-        exit(0);
-    }
-    newNode->data = data;
-    newNode->next = NULL;
-    return newNode;
-}
+};
 
 /**
  * @param: head  - pointer, who's the first element of the list, also called the head.
@@ -41,23 +24,20 @@ Node *createNode(int data) {
  * @note:  Function to add an element to a list
  * @see:   https://neerc.ifmo.ru/wiki/index.php?title=%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA#:~:text=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20%D0%BE%D0%B4%D0%BD%D0%BE%D1%81%D0%B2%D1%8F%D0%B7%D0%BD%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BF%D0%B8%D1%81%D0%BA%D0%B0.-,%D0%92%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0,-%D0%9E%D1%87%D0%B5%D0%B2%D0%B8%D0%B4%D0%B5%D0%BD%20%D1%81%D0%BB%D1%83%D1%87%D0%B0%D0%B9%2C%20%D0%BA%D0%BE%D0%B3%D0%B4%D0%B0
  */
-void insert(struct Node** head, int value)
-{
+void insert(struct Node **head, int value) {
     // Create dynamic node
-    struct Node* node
-            = (struct Node*)malloc(sizeof(struct Node));
+    struct Node *node
+            = (struct Node *) malloc(sizeof(struct Node));
     if (node == NULL) {
         // checking memory overflow
         printf("Memory overflow\n");
-    }
-    else {
+    } else {
         node->data = value;
         node->next = NULL;
         if (*head == NULL) {
             *head = node;
-        }
-        else {
-            struct Node* temp = *head;
+        } else {
+            struct Node *temp = *head;
 
             // finding last node
             while (temp->next != NULL) {
@@ -71,24 +51,22 @@ void insert(struct Node** head, int value)
 }
 
 // Displaying linked list element
-void display(struct Node* head)
-{
+void display(struct Node *head) {
     if (head == NULL) {
         printf("Empty linked list");
         return;
     }
-    struct Node* temp = head;
-    printf("\n Linked List :");
+    struct Node *temp = head;
     while (temp != NULL) {
-        printf("  %d", temp->data);
+        printf("%d ", temp->data);
         temp = temp->next;
     }
+    printf("\n");
 }
 
 // Finding last node of linked list
-struct Node* last_node(struct Node* head)
-{
-    struct Node* temp = head;
+struct Node *last_node(struct Node *head) {
+    struct Node *temp = head;
     while (temp != NULL && temp->next != NULL) {
         temp = temp->next;
     }
@@ -97,11 +75,10 @@ struct Node* last_node(struct Node* head)
 
 // We are Setting the given last node position to its proper
 // position
-struct Node* partition(struct Node* first, struct Node* last)
-{
+struct Node *partition(struct Node *first, struct Node *last) {
     // Get first node of given linked list
-    struct Node* pivot = first;
-    struct Node* front = first;
+    struct Node *pivot = first;
+    struct Node *front = first;
     int temp = 0;
     while (front != NULL && front != last) {
         if (front->data < last->data) {
@@ -128,12 +105,11 @@ struct Node* partition(struct Node* first, struct Node* last)
 }
 
 // Performing quick sort in  the given linked list
-void quick_sort(struct Node* first, struct Node* last)
-{
+void quick_sort(struct Node *first, struct Node *last) {
     if (first == last) {
         return;
     }
-    struct Node* pivot = partition(first, last);
+    struct Node *pivot = partition(first, last);
 
     if (pivot != NULL && pivot->next != NULL) {
         quick_sort(pivot->next, last);
@@ -181,39 +157,37 @@ long long glibcGeneratorByGcc(long long seed) {
     return (a * seed + c) % m;
 }
 
-void fillArrayAndList(int *arr, Node **node, size_t n) {
+void fillArrayAndList(int *arr, struct Node **head, size_t n) {
     long long seed = 1 >> 31;
 
     for (int i = 0; i < n; i++) {
         seed = glibcGeneratorByGcc(seed);
         arr[i] = seed;
-//        append(node, seed);
-//        push(node, seed);
+        insert(head, seed);
     }
 }
 
 void delegatingAllOperations(int n) {
     int *array = (int *) malloc(n * sizeof(int));
-    Node *listHead = NULL;
+    struct Node *head = NULL;
 
-    fillArrayAndList(array, &listHead, n);
+    fillArrayAndList(array, &head, n);
 
     printArray(array, n);
-//    printList(listHead);
+    display(head);
 
     quickSortArray(array, 0, n - 1);
-    quickSortList(listHead, NULL);
+    quick_sort(head, last_node(head));
 
     printArray(array, n);
-//    printList(listHead);
+    display(head);
 
     free(array);
-    free(listHead);
+    free(head);
 }
 
 int main() {
     delegatingAllOperations(10);
-
 //
 //    // Вывод исходных данных
 //    printf("Current array: ");
