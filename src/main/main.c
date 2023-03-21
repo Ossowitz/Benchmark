@@ -9,6 +9,10 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define EXCEPTION                           "\033[1;31m%s\033[0m\n"
+#define STATELESS                           "\033[1;32m%s\033[0m\n"
+#define MEMORY_OVERFLOW_EXCEPTION           "Memory overflow"
+
 static long long m = 1 << 31;
 static long long a = 1103515245;
 static long long c = 12345;
@@ -24,13 +28,15 @@ struct Node {
  * @note:  Function to add an element to a list
  * @see:   https://neerc.ifmo.ru/wiki/index.php?title=%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA#:~:text=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5%20%D0%BE%D0%B4%D0%BD%D0%BE%D1%81%D0%B2%D1%8F%D0%B7%D0%BD%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BF%D0%B8%D1%81%D0%BA%D0%B0.-,%D0%92%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0,-%D0%9E%D1%87%D0%B5%D0%B2%D0%B8%D0%B4%D0%B5%D0%BD%20%D1%81%D0%BB%D1%83%D1%87%D0%B0%D0%B9%2C%20%D0%BA%D0%BE%D0%B3%D0%B4%D0%B0
  */
-void insert(struct Node **head, int value) {
+void add(struct Node **head, int value) {
     // Create dynamic node
     struct Node *node
             = (struct Node *) malloc(sizeof(struct Node));
     if (node == NULL) {
         // checking memory overflow
-        printf("Memory overflow\n");
+        printf(STATELESS,
+               MEMORY_OVERFLOW_EXCEPTION
+        );
     } else {
         node->data = value;
         node->next = NULL;
@@ -51,7 +57,7 @@ void insert(struct Node **head, int value) {
 }
 
 // Displaying linked list element
-void display(struct Node *head) {
+void displayLinkedList(struct Node *head) {
     if (head == NULL) {
         printf("Empty linked list");
         return;
@@ -65,7 +71,7 @@ void display(struct Node *head) {
 }
 
 // Finding last node of linked list
-struct Node *last_node(struct Node *head) {
+struct Node *findLastNode(struct Node *head) {
     struct Node *temp = head;
     while (temp != NULL && temp->next != NULL) {
         temp = temp->next;
@@ -105,18 +111,18 @@ struct Node *partition(struct Node *first, struct Node *last) {
 }
 
 // Performing quick sort in  the given linked list
-void quick_sort(struct Node *first, struct Node *last) {
+void quickSortLinkedList(struct Node *first, struct Node *last) {
     if (first == last) {
         return;
     }
     struct Node *pivot = partition(first, last);
 
     if (pivot != NULL && pivot->next != NULL) {
-        quick_sort(pivot->next, last);
+        quickSortLinkedList(pivot->next, last);
     }
 
     if (pivot != NULL && first != pivot) {
-        quick_sort(first, pivot);
+        quickSortLinkedList(first, pivot);
     }
 }
 
@@ -157,61 +163,54 @@ long long glibcGeneratorByGcc(long long seed) {
     return (a * seed + c) % m;
 }
 
-void fillArrayAndList(int *arr, struct Node **head, size_t n) {
+void fillArrayAndLinkedList(int *arr, struct Node **head, size_t n) {
     long long seed = 1 >> 31;
 
     for (int i = 0; i < n; i++) {
         seed = glibcGeneratorByGcc(seed);
         arr[i] = seed;
-        insert(head, seed);
+        add(head, seed);
     }
 }
 
 void delegatingAllOperations(int n) {
+    struct timespec start, end;
+    double elapsed_time;
+
     int *array = (int *) malloc(n * sizeof(int));
     struct Node *head = NULL;
 
-    fillArrayAndList(array, &head, n);
+    fillArrayAndLinkedList(array, &head, n);
 
-    printArray(array, n);
-    display(head);
-
+    clock_gettime(CLOCK_MONOTONIC, &start);
     quickSortArray(array, 0, n - 1);
-    quick_sort(head, last_node(head));
+    clock_gettime(CLOCK_MONOTONIC, &end);
+    elapsed_time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e6;
+    printf("Array - \033[1;32m%d\033[0m: %f sec\n", n, elapsed_time);
 
-    printArray(array, n);
-    display(head);
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    quickSortLinkedList(head, findLastNode(head));
+    clock_gettime(CLOCK_MONOTONIC, &end);
+    elapsed_time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e6;
+    printf("List - \033[1;32m%d\033[0m: %f sec\n\n", n, elapsed_time);
 
     free(array);
     free(head);
 }
 
-int main() {
+void usualSort() {
+    printf("Usual sort");
     delegatingAllOperations(10);
-//
-//    // Вывод исходных данных
-//    printf("Current array: ");
-//    for (int i = 0; i < 10; i++) {
-//        printf("%d ", arr10[i]);
-//    }
-//    printf("\n");
-//
-//    printf("Current list: ");
-//    printList(listHead10);
-//
-//    // Сортировка массива и списка с использованием быстрой сортировки
-//    quickSortArray(arr10, 0, 9);
-//    quickSortList(listHead10, NULL);
-//
-//    // Вывод отсортированных данных
-//    printf("Sorted array: ");
-//    for (int i = 0; i < 10; i++) {
-//        printf("%d ", arr10[i]);
-//    }
-//    printf("\n");
-//
-//    printf("Sorted list: ");
-//    printList(listHead10);
-//
+    delegatingAllOperations(100);
+    delegatingAllOperations(1000);
+    delegatingAllOperations(1e5);
+    delegatingAllOperations(1e7);
+    delegatingAllOperations(1e9);
+}
+
+int main() {
+    usualSort();
+
+
     return 0;
 }
