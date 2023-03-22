@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 
 #define EXCEPTION                           "\033[1;31m%s\033[0m\n"
 #define STATELESS                           "\033[1;32m%s\033[0m\n"
@@ -173,44 +174,71 @@ void fillArrayAndLinkedList(int *arr, struct Node **head, size_t n) {
     }
 }
 
-void delegatingAllOperations(int n) {
-    struct timespec start, end;
-    double elapsed_time;
-
+void delegatingAllOperations(int n, int i) {
     int *array = (int *) malloc(n * sizeof(int));
     struct Node *head = NULL;
 
     fillArrayAndLinkedList(array, &head, n);
 
-    clock_gettime(CLOCK_MONOTONIC, &start);
-    quickSortArray(array, 0, n - 1);
-    clock_gettime(CLOCK_MONOTONIC, &end);
-    elapsed_time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e6;
-    printf("Array - \033[1;32m%d\033[0m: %f sec\n", n, elapsed_time);
+    if (i == 1) {
+        clock_t start = clock();
+        quickSortArray(array, 0, n - 1);
+        clock_t end = clock();
+        double elapsed = (double)(end - start) / CLOCKS_PER_SEC;
+        printf("Array - \033[1;32m%d\033[0m: %lf sec\n", n, elapsed);
+        free(array);
 
-    clock_gettime(CLOCK_MONOTONIC, &start);
-    quickSortLinkedList(head, findLastNode(head));
-    clock_gettime(CLOCK_MONOTONIC, &end);
-    elapsed_time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e6;
-    printf("List - \033[1;32m%d\033[0m: %f sec\n\n", n, elapsed_time);
+        start = clock();
+        quickSortLinkedList(head, findLastNode(head));
+        end = clock();
+        elapsed = (double)(end - start) / CLOCKS_PER_SEC;
+        printf("List - \033[1;32m%d\033[0m: %lf sec\n\n", n, elapsed);
 
-    free(array);
-    free(head);
+        free(head);
+    } else if (i == 2) {
+        quickSortArray(array, 0, n - 1);
+        clock_t start = clock();
+        quickSortArray(array, 0, n - 1);
+        clock_t end = clock();
+        double elapsed = (double)(end - start) / CLOCKS_PER_SEC;
+        printf("Array - \033[1;32m%d\033[0m: %lf sec\n", n, elapsed);
+        free(array);
+
+        quickSortLinkedList(head, findLastNode(head));
+        start = clock();
+        quickSortLinkedList(head, findLastNode(head));
+        end = clock();
+        elapsed = (double)(end - start) / CLOCKS_PER_SEC;
+        printf("List - \033[1;32m%d\033[0m: %lf sec\n\n", n, elapsed);
+
+        free(head);
+    }
 }
 
 void usualSort() {
-    printf("Usual sort");
-    delegatingAllOperations(10);
-    delegatingAllOperations(100);
-    delegatingAllOperations(1000);
-    delegatingAllOperations(1e5);
-    delegatingAllOperations(1e7);
-    delegatingAllOperations(1e9);
+    printf("Usual sort:\n");
+//    delegatingAllOperations(10, 1);
+//    delegatingAllOperations(100, 1);
+//    delegatingAllOperations(1000, 1);
+    delegatingAllOperations(1e5, 1);
+//    delegatingAllOperations(1e7, 1);
+//    delegatingAllOperations(1e9, 1);
+}
+
+void doubleSort() {
+    printf("Double sort:\n");
+//    delegatingAllOperations(10, 2);
+//    delegatingAllOperations(100, 2);
+//    delegatingAllOperations(1000, 2);
+    delegatingAllOperations(1e5, 2);
+//    delegatingAllOperations(1e7, 2);
+//    delegatingAllOperations(1e9, 2);
 }
 
 int main() {
-    usualSort();
 
+    usualSort();
+    doubleSort();
 
     return 0;
 }
