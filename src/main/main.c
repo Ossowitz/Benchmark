@@ -8,9 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <unistd.h>
 
-#define EXCEPTION                           "\033[1;31m%s\033[0m\n"
+#define EXCEPTION                   "\033[1;31m%s\033[0m\n"
 #define STATELESS                           "\033[1;32m%s\033[0m\n"
 #define MEMORY_OVERFLOW_EXCEPTION           "Memory overflow"
 
@@ -184,23 +183,22 @@ void delegatingAllOperations(int n, int i) {
         clock_t start = clock();
         quickSortArray(array, 0, n - 1);
         clock_t end = clock();
-        double elapsed = (double)(end - start) / CLOCKS_PER_SEC;
+        double elapsed = (double) (end - start) / CLOCKS_PER_SEC;
         printf("Array - \033[1;32m%d\033[0m: %lf sec\n", n, elapsed);
         free(array);
 
         start = clock();
         quickSortLinkedList(head, findLastNode(head));
         end = clock();
-        elapsed = (double)(end - start) / CLOCKS_PER_SEC;
+        elapsed = (double) (end - start) / CLOCKS_PER_SEC;
         printf("List - \033[1;32m%d\033[0m: %lf sec\n\n", n, elapsed);
-
         free(head);
     } else if (i == 2) {
         quickSortArray(array, 0, n - 1);
         clock_t start = clock();
         quickSortArray(array, 0, n - 1);
         clock_t end = clock();
-        double elapsed = (double)(end - start) / CLOCKS_PER_SEC;
+        double elapsed = (double) (end - start) / CLOCKS_PER_SEC;
         printf("Array - \033[1;32m%d\033[0m: %lf sec\n", n, elapsed);
         free(array);
 
@@ -208,31 +206,28 @@ void delegatingAllOperations(int n, int i) {
         start = clock();
         quickSortLinkedList(head, findLastNode(head));
         end = clock();
-        elapsed = (double)(end - start) / CLOCKS_PER_SEC;
+        elapsed = (double) (end - start) / CLOCKS_PER_SEC;
         printf("List - \033[1;32m%d\033[0m: %lf sec\n\n", n, elapsed);
-
         free(head);
     }
 }
 
 void usualSort() {
-    printf("Usual sort:\n");
-//    delegatingAllOperations(10, 1);
-//    delegatingAllOperations(100, 1);
-//    delegatingAllOperations(1000, 1);
-    delegatingAllOperations(1e5, 1);
-//    delegatingAllOperations(1e7, 1);
-//    delegatingAllOperations(1e9, 1);
+    printf(EXCEPTION,
+           "Usual sort:"
+    );
+    for (int i = 0, n = 10; i < 6; i++, n *= 10) {
+        delegatingAllOperations(n, 1);
+    }
 }
 
 void doubleSort() {
-    printf("Double sort:\n");
-//    delegatingAllOperations(10, 2);
-//    delegatingAllOperations(100, 2);
-//    delegatingAllOperations(1000, 2);
-    delegatingAllOperations(1e5, 2);
-//    delegatingAllOperations(1e7, 2);
-//    delegatingAllOperations(1e9, 2);
+    printf(EXCEPTION,
+           "Double sort:"
+    );
+    for (int i = 0, n = 10; i < 6; i++, n *= 10) {
+        delegatingAllOperations(n, 2);
+    }
 }
 
 int main() {
