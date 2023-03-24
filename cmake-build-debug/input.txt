@@ -1,0 +1,14 @@
+UsualSort_Array - 10: 0.000000 secUsualSort_List - 10: 0.000000 secUsualSort_Array - 100: 0.000000 secUsualSort_List - 100: 0.000000 secUsualSort_Array - 1000: 0.000000 secUsualSort_List - 1000: 0.000000 secUsualSort_Array - 10000: 0.000000 secUsualSort_List - 10000: 0.000000 secUsualSort_Array - 10: 0.000000 secUsualSort_List - 10: 0.000000 secUsualSort_Array - 100: 0.000000 secUsualSort_List - 100: 0.000000 secUsualSort_Array - 1000: 0.000000 secUsualSort_List - 1000: 0.000000 secDoubleSort_Array - 10: 0.000000 secDoubleSort_List - 10: 0.000000 secDoubleSort_Array - 100: 0.000000 secDoubleSort_List - 100: 0.000000 secDoubleSort_Array - 1000: 0.011000 secDoubleSort_List - 1000: 0.000000 secUsualSort_Array - 10: 0.000000 secUsualSort_List - 10: 0.000000 secUsualSort_Array - 100: 0.000000 secUsualSort_List - 100: 0.000000 secUsualSort_Array - 1000: 0.000000 secUsualSort_List - 1000: 0.000000 secDoubleSort_Array - 10: 0.000000 secDoubleSort_List - 10: 0.000000 secDoubleSort_Array - 100: 0.000000 secDoubleSort_List - 100: 0.000000 secDoubleSort_Array - 1000: 0.000000 secDoubleSort_List - 1000: 0.000000 secUsualSort_Array - 10: 0.000000 sec
+UsualSort_List - 10: 0.000000 sec
+UsualSort_Array - 100: 0.000000 sec
+UsualSort_List - 100: 0.000000 sec
+UsualSort_Array - 1000: 0.000000 sec
+UsualSort_List - 1000: 0.000000 sec
+DoubleSort_Array - 10: 0.000000 sec
+DoubleSort_List - 10: 0.000000 sec
+DoubleSort_Array - 100: 0.000000 sec
+DoubleSort_List - 100: 0.000000 sec
+DoubleSort_Array - 1000: 0.000000 sec
+DoubleSort_List - 1000: 0.009000 sec
+UsualSort_Array - 10: 0.000000 sec
+1UsualSort_Array - 10: 0.000000 sec

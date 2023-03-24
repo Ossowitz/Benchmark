@@ -1,0 +1,3 @@
+C:/Users/kohdy/CLionProjects/sortnode/cmake-build-debug/CMakeFiles/sortnode.dir
+C:/Users/kohdy/CLionProjects/sortnode/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/kohdy/CLionProjects/sortnode/cmake-build-debug/CMakeFiles/rebuild_cache.dir
