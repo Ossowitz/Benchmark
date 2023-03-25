@@ -4,6 +4,6 @@ project(sortnode C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(sortnode
-        src/main/main.c)
+        sortnode.c)
 set_target_properties(sortnode PROPERTIES LINK_FLAGS "-Wl,--stack,10000000")
 target_compile_definitions(sortnode PRIVATE -DHEAP_SIZE=10000000)

@@ -134,6 +134,11 @@ void printArray(int *arr, size_t size) {
     printf("\n");
 }
 
+// Функция сравнения для сортировки в обратном порядке
+int compare(const void * a, const void * b) {
+    return (*(int*)b - *(int*)a);
+}
+
 // Функция для быстрой сортировки массива
 void quickSortArray(int arr[], int low, int high) {
     if (low < high) {
@@ -173,6 +178,21 @@ void fillArrayAndLinkedList(int *arr, struct Node **head, size_t n) {
     }
 }
 
+void reverseList(struct Node** head) {
+    struct Node* current = *head;
+    struct Node* prev = NULL;
+    struct Node* next = NULL;
+
+    while (current != NULL) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+
+    *head = prev;
+}
+
 void delegatingAllOperations(int n, int i) {
     int *array = (int *) malloc(n * sizeof(int));
     struct Node *head = NULL;
@@ -209,6 +229,23 @@ void delegatingAllOperations(int n, int i) {
         elapsed = (double) (end - start) / CLOCKS_PER_SEC;
         printf("List - \033[1;32m%d\033[0m: %lf sec\n\n", n, elapsed);
         free(head);
+    } else if (i == 3) {
+        // Сортировка массива в обратном порядке
+        qsort(array, n, sizeof(int), compare);
+        clock_t start = clock();
+        quickSortArray(array, 0, n - 1);
+        clock_t end = clock();
+        double elapsed = (double) (end - start) / CLOCKS_PER_SEC;
+        printf("Array - \033[1;32m%d\033[0m: %lf sec\n", n, elapsed);
+        free(array);
+
+        reverseList(&head);
+        start = clock();
+        quickSortLinkedList(head, findLastNode(head));
+        end = clock();
+        elapsed = (double) (end - start) / CLOCKS_PER_SEC;
+        printf("List - \033[1;32m%d\033[0m: %lf sec\n\n", n, elapsed);
+        free(head);
     }
 }
 
@@ -230,10 +267,20 @@ void doubleSort() {
     }
 }
 
+void descSort() {
+    printf(EXCEPTION,
+           "Desc sort:"
+    );
+    for (int i = 0, n = 10; i < 6; i++, n *= 10) {
+        delegatingAllOperations(n, 3);
+    }
+}
+
 int main() {
 
     usualSort();
     doubleSort();
+    descSort();
 
     return 0;
 }
