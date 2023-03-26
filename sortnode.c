@@ -56,7 +56,10 @@ void add(struct Node **head, int value) {
     }
 }
 
-// Displaying linked list element
+/***
+ * @param: head - pointer to the beginning of a linear list
+ * @note: function, if there are problems and there is a need to test the program
+ */
 void displayLinkedList(struct Node *head) {
     if (head == NULL) {
         printf("Empty linked list");
@@ -126,7 +129,11 @@ void quickSortLinkedList(struct Node *first, struct Node *last) {
     }
 }
 
-// Функция для вывода массива
+/**
+ * @param arr  - array
+ * @param size - size of array
+ * @note: function, if there are problems and there is a need to test the program
+ */
 void printArray(int *arr, size_t size) {
     for (int i = 0; i < size; i++) {
         printf("%d ", *(arr + i));
@@ -134,12 +141,21 @@ void printArray(int *arr, size_t size) {
     printf("\n");
 }
 
-// Функция сравнения для сортировки в обратном порядке
+/**
+ * @param a - numeric
+ * @param b - numeric
+ * @return: compare function to sort in reverse order
+ */
 int compare(const void * a, const void * b) {
     return (*(int*)b - *(int*)a);
 }
 
-// Функция для быстрой сортировки массива
+/**
+ * @param: arr  - array, which we are going to sort
+ * @param: low  - zero index
+ * @param: high - last index
+ * @note: https://www.programiz.com/dsa/quick-sort
+ */
 void quickSortArray(int arr[], int low, int high) {
     if (low < high) {
         int i = low, j = high, pivot = arr[low];
@@ -164,10 +180,21 @@ void quickSortArray(int arr[], int low, int high) {
     }
 }
 
+/**
+ * @param:  seed - numeric, initial value in LKG
+ * @return: pseudo-random number
+ * @note:   https://ru.wikipedia.org/wiki/%D0%9B%D0%B8%D0%BD%D0%B5%D0%B9%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D0%BD%D0%B3%D1%80%D1%83%D1%8D%D0%BD%D1%82%D0%BD%D1%8B%D0%B9_%D0%BC%D0%B5%D1%82%D0%BE%D0%B4#:~:text=glibc%20(-,used%20by,-GCC)%5B10
+ */
 long long glibcGeneratorByGcc(long long seed) {
     return (a * seed + c) % m;
 }
 
+/**
+ * @param: arr  - array
+ * @param: head - pointer to the beginning of a linear list
+ * @param: n    - numeric, which is needed to indicate how much to fill the data structure
+ * @note: a function that fills an array and a linear list with random numbers
+ */
 void fillArrayAndLinkedList(int *arr, struct Node **head, size_t n) {
     long long seed = 1 >> 31;
 
@@ -193,6 +220,12 @@ void reverseList(struct Node** head) {
     *head = prev;
 }
 
+/**
+ *
+ * @param: n - data structure size (array or linear list)
+ * @param: i - operation ID: 1 - usualSort(), 2 - doubleSort(), 3 - descSort()
+ * @note: the function to which we delegate the sorting
+ */
 void delegatingAllOperations(int n, int i) {
     int *array = (int *) malloc(n * sizeof(int));
     struct Node *head = NULL;
@@ -249,6 +282,10 @@ void delegatingAllOperations(int n, int i) {
     }
 }
 
+/**
+ * @note: usual quicksort
+ * @note: we delegate the execution of the sort itself to another function
+ */
 void usualSort() {
     printf(EXCEPTION,
            "Usual sort:"
@@ -258,6 +295,10 @@ void usualSort() {
     }
 }
 
+/**
+ * @note: sorting an already sorted data structure
+ * @note: we delegate the execution of the sort itself to another function
+ */
 void doubleSort() {
     printf(EXCEPTION,
            "Double sort:"
@@ -267,6 +308,10 @@ void doubleSort() {
     }
 }
 
+/**
+ * @note: sorting a data structure that was previously sorted in reverse order
+ * @note: we delegate the execution of the sort itself to another function
+ */
 void descSort() {
     printf(EXCEPTION,
            "Desc sort:"
@@ -276,6 +321,11 @@ void descSort() {
     }
 }
 
+/**
+ * @note: usualSort()  - usual quicksort
+ * @note: doubleSort() - sorting an already sorted data structure
+ * @note: descSort()   - sorting a data structure that was previously sorted in reverse order
+ */
 int main() {
 
     usualSort();
