@@ -56,7 +56,7 @@ void add(struct Node **head, int value) {
     }
 }
 
-/***
+/**
  * @param: head - pointer to the beginning of a linear list
  * @note: function, if there are problems and there is a need to test the program
  */
@@ -82,8 +82,12 @@ struct Node *findLastNode(struct Node *head) {
     return temp;
 }
 
-// We are Setting the given last node position to its proper
-// position
+/**
+ * @param: first - pointer to the first element of the linked list
+ * @param: last  - pointer to the last element of the linked list
+ * @return: In the partition function, the last element is considered a pivot
+ * @see:    https://www.geeksforgeeks.org/quicksort-on-singly-linked-list/
+ */
 struct Node *partition(struct Node *first, struct Node *last) {
     // Get first node of given linked list
     struct Node *pivot = first;
@@ -113,7 +117,12 @@ struct Node *partition(struct Node *first, struct Node *last) {
     return pivot;
 }
 
-// Performing quick sort in  the given linked list
+/**
+ * @param: first - pointer to the first element of the linked list
+ * @param: last  - pointer to the last element of the linked list
+ * @note:  Performing quick sort in  the given linked list
+ * @see:   https://www.geeksforgeeks.org/quicksort-on-singly-linked-list/
+ */
 void quickSortLinkedList(struct Node *first, struct Node *last) {
     if (first == last) {
         return;
@@ -221,7 +230,6 @@ void reverseList(struct Node** head) {
 }
 
 /**
- *
  * @param: n - data structure size (array or linear list)
  * @param: i - operation ID: 1 - usualSort(), 2 - doubleSort(), 3 - descSort()
  * @note: the function to which we delegate the sorting
