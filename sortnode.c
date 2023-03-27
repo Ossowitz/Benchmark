@@ -73,7 +73,10 @@ void displayLinkedList(struct Node *head) {
     printf("\n");
 }
 
-// Finding last node of linked list
+/**
+ * @param:  head - pointer to the beginning of a linear list
+ * @return: finding last node of linked list
+ */
 struct Node *findLastNode(struct Node *head) {
     struct Node *temp = head;
     while (temp != NULL && temp->next != NULL) {
@@ -83,8 +86,8 @@ struct Node *findLastNode(struct Node *head) {
 }
 
 /**
- * @param: first - pointer to the first element of the linked list
- * @param: last  - pointer to the last element of the linked list
+ * @param:  first - pointer to the first element of the linked list
+ * @param:  last  - pointer to the last element of the linked list
  * @return: In the partition function, the last element is considered a pivot
  * @see:    https://www.geeksforgeeks.org/quicksort-on-singly-linked-list/
  */
@@ -151,8 +154,8 @@ void printArray(int *arr, size_t size) {
 }
 
 /**
- * @param a - numeric
- * @param b - numeric
+ * @param   a - numeric
+ * @param   b - numeric
  * @return: compare function to sort in reverse order
  */
 int compare(const void * a, const void * b) {
@@ -163,7 +166,7 @@ int compare(const void * a, const void * b) {
  * @param: arr  - array, which we are going to sort
  * @param: low  - zero index
  * @param: high - last index
- * @note: https://www.programiz.com/dsa/quick-sort
+ * @note:  https://www.programiz.com/dsa/quick-sort
  */
 void quickSortArray(int arr[], int low, int high) {
     if (low < high) {
@@ -202,7 +205,7 @@ long long glibcGeneratorByGcc(long long seed) {
  * @param: arr  - array
  * @param: head - pointer to the beginning of a linear list
  * @param: n    - numeric, which is needed to indicate how much to fill the data structure
- * @note: a function that fills an array and a linear list with random numbers
+ * @note:  a function that fills an array and a linear list with random numbers
  */
 void fillArrayAndLinkedList(int *arr, struct Node **head, size_t n) {
     long long seed = 1 >> 31;
@@ -214,6 +217,10 @@ void fillArrayAndLinkedList(int *arr, struct Node **head, size_t n) {
     }
 }
 
+/**
+ * @param: head - pointer to the beginning of a linear list
+ * @note:  reverse linked list
+ */
 void reverseList(struct Node** head) {
     struct Node* current = *head;
     struct Node* prev = NULL;
