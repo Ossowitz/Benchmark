@@ -304,7 +304,7 @@ void usualSort() {
     printf(EXCEPTION,
            "Usual sort:"
     );
-    for (int i = 4, n = 100000; i < 6; i++, n *= 10) {
+    for (int i = 0, n = 10; i < 9; i++, n *= 10) {
         delegatingAllOperations(n, 1);
     }
 }
@@ -317,7 +317,7 @@ void doubleSort() {
     printf(EXCEPTION,
            "Double sort:"
     );
-    for (int i = 4, n = 100000; i < 6; i++, n *= 10) {
+    for (int i = 0, n = 10; i < 9; i++, n *= 10) {
         delegatingAllOperations(n, 2);
     }
 }
@@ -330,7 +330,7 @@ void descSort() {
     printf(EXCEPTION,
            "Desc sort:"
     );
-    for (int i = 4, n = 100000; i < 6; i++, n *= 10) {
+    for (int i = 0, n = 10; i < 9; i++, n *= 10) {
         delegatingAllOperations(n, 3);
     }
 }
@@ -342,7 +342,7 @@ void descSort() {
  */
 int main() {
 
-    usualSort();
+//    usualSort();
     doubleSort();
     descSort();
 
