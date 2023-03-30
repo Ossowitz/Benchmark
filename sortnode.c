@@ -342,7 +342,7 @@ void descSort() {
  */
 int main() {
 
-//    usualSort();
+    usualSort();
     doubleSort();
     descSort();
 
