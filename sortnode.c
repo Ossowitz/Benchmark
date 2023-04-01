@@ -138,8 +138,8 @@ void quickSortLinkedList(struct Node *first, struct Node *last) {
 }
 
 /**
- * @param arr  - array
- * @param size - size of array
+ * @param: arr  - array
+ * @param: size - size of array
  * @note: function, if there are problems and there is a need to test the program
  */
 void printArray(int *arr, size_t size) {
