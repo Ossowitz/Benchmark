@@ -13,10 +13,6 @@
 #define STATELESS                           "\033[1;32m%s\033[0m\n"
 #define MEMORY_OVERFLOW_EXCEPTION           "Memory overflow"
 
-static long long m = 1 << 31;
-static long long a = 1103515245;
-static long long c = 12345;
-
 struct Node {
     int data;
     struct Node *next;
@@ -198,6 +194,9 @@ void quickSortArray(int arr[], int low, int high) {
  * @note:   https://ru.wikipedia.org/wiki/%D0%9B%D0%B8%D0%BD%D0%B5%D0%B9%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D0%BD%D0%B3%D1%80%D1%83%D1%8D%D0%BD%D1%82%D0%BD%D1%8B%D0%B9_%D0%BC%D0%B5%D1%82%D0%BE%D0%B4#:~:text=glibc%20(-,used%20by,-GCC)%5B10
  */
 long long glibcGeneratorByGcc(long long seed) {
+    long long m = 1 << 31;
+    long long a = 1103515245;
+    long long c = 12345;
     return (a * seed + c) % m;
 }
 
@@ -305,7 +304,7 @@ void usualSort() {
     printf(EXCEPTION,
            "Usual sort:"
     );
-    for (int i = 0, n = 10; i < 6; i++, n *= 10) {
+    for (int i = 4, n = 100000; i < 6; i++, n *= 10) {
         delegatingAllOperations(n, 1);
     }
 }
@@ -318,7 +317,7 @@ void doubleSort() {
     printf(EXCEPTION,
            "Double sort:"
     );
-    for (int i = 0, n = 10; i < 6; i++, n *= 10) {
+    for (int i = 4, n = 100000; i < 6; i++, n *= 10) {
         delegatingAllOperations(n, 2);
     }
 }
@@ -331,7 +330,7 @@ void descSort() {
     printf(EXCEPTION,
            "Desc sort:"
     );
-    for (int i = 0, n = 10; i < 6; i++, n *= 10) {
+    for (int i = 4, n = 100000; i < 6; i++, n *= 10) {
         delegatingAllOperations(n, 3);
     }
 }
